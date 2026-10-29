@@ -3,10 +3,11 @@ cd /d "%~dp0"
 
 echo Synchronizing with GitHub...
 
+rem Generate URLs.csv for GitHub Pages
 echo Filename;URL > URLs.csv
 
 for %%F in (*.pdf) do (
-    echo %%F;https://github.com/koolbear-oss/ATG/blob/main/%%F>>URLs.csv
+    echo "%%F";"https://koolbear-oss.github.io/ATG/%%F">>URLs.csv
 )
 
 git add -A
@@ -18,7 +19,7 @@ if %errorlevel%==0 (
     exit /b
 )
 
-for /f %%i in ('powershell -NoProfile -Command "Get-Date -Format \"yyyy-MM-dd HH:mm:ss\""') do set DTS=%%i
+for /f %%i in ('powershell -NoProfile -Command "Get-Date -Format ''yyyy-MM-dd HH:mm:ss''"') do set DTS=%%i
 
 git commit -m "ATG sync %DTS%"
 git push origin main
